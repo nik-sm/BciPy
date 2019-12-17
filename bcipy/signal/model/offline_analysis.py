@@ -57,6 +57,12 @@ def offline_analysis(data_folder: str = None,
     lp_filter = parameters.get('filter_low', 2)
     filter_order = parameters.get('filter_order', 2)
 
+    log.info(
+        f'Bandpass filters: [{lp_filter}:{hp_filter}Hz]. \n '
+        f'Filter order=[{filter_order}]. \n Downsampling rate=[{downsample_rate}] \n'
+        f'Notch filter=[{notch_filter}] \n'
+        )
+
     # get offset and k folds
     static_offset = parameters.get('static_trigger_offset', 0)
     k_folds = parameters.get('k_folds', 10)
@@ -69,6 +75,8 @@ def offline_analysis(data_folder: str = None,
 
     # Remove 60hz noise with a notch filter
     notch_filter_data = notch.notch_filter(raw_dat, fs, frequency_to_remove=notch_filter)
+    # CUSTOM NOTCH FILTER HERE
+    # notch_filter_data = notch.notch_filter(notch_filter_data, fs, frequency_to_remove=76)
 
     # bandpass filter
     filtered_data = bandpass.butter_bandpass_filter(
@@ -87,6 +95,8 @@ def offline_analysis(data_folder: str = None,
     # Channel map can be checked from raw_data.csv file.
     # read_data_csv already removes the timespamp column.
     channel_map = analysis_channels(channels, type_amp)
+
+    log.info(f'Channels used for analysis: {channel_map}')
 
     x, y, _, _ = trial_reshaper(t_t_i, t_i, data,
                                 mode=mode, fs=fs, k=downsample_rate,
