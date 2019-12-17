@@ -93,7 +93,7 @@
     ],
     "type": "int"
   },
-  "filter_high_pass": {
+  "filter_high": {
     "value": "110",
     "section": "signal_config",
     "readableName": "High Frequency Filter Cutoff",
@@ -126,11 +126,19 @@
     ],
     "type": "float"
   },
+  "down_sampling_rate": {
+    "value": "1",
+    "section": "signal_config",
+    "readableName": "down_sampling_rate",
+    "helpTip": "down_sampling_rate",
+    "recommended_values": "[2]",
+    "type": "int"
+  },
   "notch_filter_frequency": {
     "value": "60",
     "section": "signal_config",
     "readableName": "Notch Filter Frequency",
-    "helpTip": "Notch Filter Frequency. Used to remove noise from surronding environment.",
+    "helpTip": "Notch Filter Frequency. Used to remove noise from surrounding environment.",
     "recommended_values": [
       "59",
       "60"
@@ -796,14 +804,6 @@
     "helpTip": "Threshold for level two feedback (InterSequenceFeedback)",
     "recommended_values": "",
     "type": "float"
-  },
-  "down_sampling_rate": {
-    "value": "1",
-    "section": "signal_config",
-    "readableName": "down_sampling_rate",
-    "helpTip": "down_sampling_rate",
-    "recommended_values": "[2]",
-    "type": "int"
   },
   "k_folds": {
     "value": "10",

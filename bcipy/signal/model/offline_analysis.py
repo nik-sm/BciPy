@@ -58,8 +58,8 @@ def offline_analysis(data_folder: str = None,
     filter_order = parameters.get('filter_order', 2)
 
     log.info(
-        f'Bandpass filters: [{lp_filter}:{hp_filter}Hz]. \n '
-        f'Filter order=[{filter_order}]. \n Downsampling rate=[{downsample_rate}] \n'
+        f'Bandpass filters: [{lp_filter}:{hp_filter}Hz]. \n'
+        f'Filter order=[{filter_order}]. \nDownsampling rate=[{downsample_rate}] \n'
         f'Notch filter=[{notch_filter}] \n'
         )
 
