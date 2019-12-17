@@ -8,7 +8,7 @@
     "type": "bool"
   },
   "fake_data": {
-    "value": "true",
+    "value": "false",
     "section": "bci_config",
     "readableName": "Fake Data Sessions",
     "helpTip": "If true, fake data server used",
@@ -64,7 +64,7 @@
     "type": "directorypath"
   },
   "time_flash": {
-    "value": "0.25",
+    "value": "0.3333",
     "section": "bci_config",
     "readableName": "Flash Length for Letters (sec)",
     "helpTip": "Flash Length for Letters",
@@ -72,7 +72,7 @@
     "type": "float"
   },
   "max_seq_len": {
-    "value": "50",
+    "value": "200",
     "section": "bci_config",
     "readableName": "Maximum Sequence Length",
     "helpTip": "Maximum number of sequences to present in spelling tasks. Task will end if this is exceeded.",
@@ -83,7 +83,7 @@
     "type": "int"
   },
   "max_seq_per_trial": {
-    "value": "10",
+    "value": "11",
     "section": "bci_config",
     "readableName": "Maximum Sequences Per Trial",
     "helpTip": "Maximum number of sequences to present for a single trial before making a decision",
@@ -94,7 +94,7 @@
     "type": "int"
   },
   "filter_high_pass": {
-    "value": "45",
+    "value": "110",
     "section": "signal_config",
     "readableName": "High Pass Filter Cutoff",
     "helpTip": "High Pass Filter Cutoff (Hz)",
@@ -167,7 +167,7 @@
     "type": "str"
   },
   "languagemodelenabled": {
-    "value": "false",
+    "value": "true",
     "section": "lang_model_config",
     "readableName": "Language Model Enabled",
     "helpTip": "This is the language model.",
@@ -234,7 +234,7 @@
     "type": "float"
   },
   "task_text": {
-    "value": "HELLO_THERE",
+    "value": "HELLO_SUN",
     "section": "bci_config",
     "readableName": "text task",
     "helpTip": "text task",
@@ -250,7 +250,7 @@
     "type": "int"
   },
   "max_minutes": {
-    "value": "10",
+    "value": "20",
     "section": "bci_config",
     "readableName": "Max Time to Spell",
     "helpTip": "The maximum time (in minutes) allowed to attempt to spell a Copy Phrase before stopping.",
@@ -428,7 +428,7 @@
     "type": "str"
   },
   "path_to_presentation_images": {
-    "value": "bcipy/static/images/bci_main_images/",
+    "value": "bcipy/static/images/Icon_Set_1/",
     "section": "bci_config",
     "readableName": "Path to images and/or sound files",
     "helpTip": "Is this Text -True- or Image -False-",
@@ -527,7 +527,7 @@
     "type": "int"
   },
   "acq_show_viewer": {
-    "value": "false",
+    "value": "true",
     "section": "acq_config",
     "readableName": "Show EEG Viewer",
     "helpTip": "Display the EEG data in a separate window.",
@@ -742,7 +742,7 @@
     "type": "str"
   },
   "feedback_band_lower_limit": {
-    "value": "4",
+    "value": "8",
     "section": "feedback_config",
     "readableName": "Feedback Band Lower Limit",
     "helpTip": "Lower Band for PSD Feedback Tasks",
@@ -750,7 +750,7 @@
     "type": "float"
   },
   "feedback_band_upper_limit": {
-    "value": "7",
+    "value": "10",
     "section": "feedback_config",
     "readableName": "Feedback Band Upper Limit",
     "helpTip": "Upper Band for PSD Feedback Tasks",
@@ -758,7 +758,7 @@
     "type": "float"
   },
   "feedback_level_descending": {
-    "value": "true",
+    "value": "false",
     "section": "feedback_config",
     "readableName": "Feedback Level Ordering",
     "helpTip": "Ordering of feedback; Descending (true) for PSD that increase with focus or Ascending (false) for PSD that decrease with focus",
@@ -766,7 +766,7 @@
     "type": "bool"
   },
   "feedback_level_5_threshold": {
-    "value": "4",
+    "value": "0.1983",
     "section": "feedback_config",
     "readableName": "Feedback Level 5 Threshold",
     "helpTip": "Threshold for level five (highest) feedback (InterSequenceFeedback)",
@@ -774,7 +774,7 @@
     "type": "float"
   },
   "feedback_level_4_threshold": {
-    "value": "7",
+    "value": "0.2802",
     "section": "feedback_config",
     "readableName": "Feedback Level 4 Threshold",
     "helpTip": "Threshold for level four feedback (InterSequenceFeedback)",
@@ -782,7 +782,7 @@
     "type": "float"
   },
   "feedback_level_3_threshold": {
-    "value": "4",
+    "value": "0.3404",
     "section": "feedback_config",
     "readableName": "Feedback Level 3 Threshold",
     "helpTip": "Threshold for level three feedback (InterSequenceFeedback)",
@@ -790,7 +790,7 @@
     "type": "float"
   },
   "feedback_level_2_threshold": {
-    "value": "7",
+    "value": "0.4430",
     "section": "feedback_config",
     "readableName": "Feedback Level 2 Threshold",
     "helpTip": "Threshold for level two feedback (InterSequenceFeedback)",
@@ -798,7 +798,7 @@
     "type": "float"
   },
   "down_sampling_rate": {
-    "value": "2",
+    "value": "1",
     "section": "signal_config",
     "readableName": "down_sampling_rate",
     "helpTip": "down_sampling_rate",
@@ -870,7 +870,7 @@
     "type": "float"
   },
   "backspace_always_shown": {
-    "value": "false",
+    "value": "true",
     "section": "bci_config",
     "readableName": "Backspace always shown",
     "helpTip": "Should the backspace character always be shown in Copy Phrase tasks.",

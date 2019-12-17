@@ -43,8 +43,8 @@ class RSVPInterSequenceFeedbackCalibration(Task):
     """
     TASK_NAME = 'RSVP Inter Sequence Feedback Calibration Task'
     # This defines the channel we use to calculate the PSD for feedback. We want to use a
-    #   posterior channel. If Oz available, use that!
-    PSD_CHANNEL_INDEX = 6
+    #   posterior channel. If Oz available, use that! (DK currently has this set to P4, channel 0)
+    PSD_CHANNEL_INDEX = 0
 
     def __init__(self, win, daq, parameters, file_save):
         super(RSVPInterSequenceFeedbackCalibration, self).__init__()
@@ -244,6 +244,7 @@ class RSVPInterSequenceFeedbackCalibration(Task):
             sampling_rate=self.filtered_sampling_rate,
             # plot=True,  # uncomment to see the PSD plot in real time
             method=self.psd_method,
+            # set relative=False to use absolute
             relative=True)
 
         self.logger.info(f'[Feedback] Response decision {response}')
