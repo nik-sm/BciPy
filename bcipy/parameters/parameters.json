@@ -16,7 +16,7 @@
     "type": "bool"
   },
   "full_screen": {
-    "value": "false",
+    "value": "true",
     "section": "bci_config",
     "readableName": "Full Screen",
     "helpTip": "Full Screen Mode",
@@ -64,7 +64,7 @@
     "type": "directorypath"
   },
   "time_flash": {
-    "value": "0.3333",
+    "value": "0.333",
     "section": "bci_config",
     "readableName": "Flash Length for Letters (sec)",
     "helpTip": "Flash Length for Letters",
@@ -94,7 +94,7 @@
     "type": "int"
   },
   "filter_high": {
-    "value": "110",
+    "value": "45",
     "section": "signal_config",
     "readableName": "High Frequency Filter Cutoff",
     "helpTip": "High Frequency Filter Cutoff (Hz)",
@@ -127,7 +127,7 @@
     "type": "float"
   },
   "down_sampling_rate": {
-    "value": "1",
+    "value": "2",
     "section": "signal_config",
     "readableName": "down_sampling_rate",
     "helpTip": "down_sampling_rate",
@@ -242,7 +242,7 @@
     "type": "float"
   },
   "task_text": {
-    "value": "HELLO_SUN",
+    "value": "HELLO_WORLD",
     "section": "bci_config",
     "readableName": "text task",
     "helpTip": "text task",
@@ -774,7 +774,7 @@
     "type": "bool"
   },
   "feedback_level_5_threshold": {
-    "value": "0.1983",
+    "value": "0.2052",
     "section": "feedback_config",
     "readableName": "Feedback Level 5 Threshold",
     "helpTip": "Threshold for level five (highest) feedback (InterSequenceFeedback)",
@@ -782,7 +782,7 @@
     "type": "float"
   },
   "feedback_level_4_threshold": {
-    "value": "0.2802",
+    "value": "0.2693",
     "section": "feedback_config",
     "readableName": "Feedback Level 4 Threshold",
     "helpTip": "Threshold for level four feedback (InterSequenceFeedback)",
@@ -790,7 +790,7 @@
     "type": "float"
   },
   "feedback_level_3_threshold": {
-    "value": "0.3404",
+    "value": "0.3147",
     "section": "feedback_config",
     "readableName": "Feedback Level 3 Threshold",
     "helpTip": "Threshold for level three feedback (InterSequenceFeedback)",
@@ -798,7 +798,7 @@
     "type": "float"
   },
   "feedback_level_2_threshold": {
-    "value": "0.4430",
+    "value": "0.3780",
     "section": "feedback_config",
     "readableName": "Feedback Level 2 Threshold",
     "helpTip": "Threshold for level two feedback (InterSequenceFeedback)",

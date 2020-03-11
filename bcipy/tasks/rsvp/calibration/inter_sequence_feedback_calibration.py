@@ -43,8 +43,8 @@ class RSVPInterSequenceFeedbackCalibration(Task):
     """
     TASK_NAME = 'RSVP Inter Sequence Feedback Calibration Task'
     # This defines the channel we use to calculate the PSD for feedback. We want to use a
-    #   posterior channel. If Oz available, use that! (DK currently has this set to P4, channel 0)
-    PSD_CHANNEL_INDEX = 0
+    #   posterior channel. If Oz available, use that! (DK currently has this set to P4, channel 0; or Pz, channel 2)
+    PSD_CHANNEL_INDEX = 2
 
     def __init__(self, win, daq, parameters, file_save):
         super(RSVPInterSequenceFeedbackCalibration, self).__init__()
@@ -303,6 +303,8 @@ class RSVPInterSequenceFeedbackCalibration(Task):
         # filter it
         notch_filterted_data = notch.notch_filter(
             raw_data, self.fs, self.notch_filter_frequency)
+        # notch_filterted_data = notch.notch_filter(
+        #     raw_data, self.fs, self.notch_filter_frequency)
         filtered_data = bandpass.butter_bandpass_filter(
             notch_filterted_data, self.filter_low, self.filter_high, self.fs, order=self.filter_order)
         data = downsample.downsample(

@@ -101,9 +101,13 @@ def alphabet(parameters=None, include_path=True):
                     stimulus_array.append(img)
             return stimulus_array
 
+    # Removing the characters per Barry's request for the AD supplement
+    # return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    #         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
+    # Normal alphabet [copy-phrase]
     return ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-            BACKSPACE_CHAR, SPACE_CHAR]
+            'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', SPACE_CHAR, BACKSPACE_CHAR]
 
 
 def process_data_for_decision(

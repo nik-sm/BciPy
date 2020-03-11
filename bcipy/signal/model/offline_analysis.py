@@ -76,7 +76,8 @@ def offline_analysis(data_folder: str = None,
     # Remove 60hz noise with a notch filter
     notch_filter_data = notch.notch_filter(raw_dat, fs, frequency_to_remove=notch_filter)
     # CUSTOM NOTCH FILTER HERE
-    # notch_filter_data = notch.notch_filter(notch_filter_data, fs, frequency_to_remove=76)
+    #notch_filter_data = notch.notch_filter(notch_filter_data, fs, frequency_to_remove=180)
+    #notch_filter_data = notch.notch_filter(notch_filter_data, fs, frequency_to_remove=120)
 
     # bandpass filter
     filtered_data = bandpass.butter_bandpass_filter(
