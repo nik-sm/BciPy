@@ -27,7 +27,8 @@ def power_spectral_density(
         window_length: float = 4.0,
         plot: bool = False,
         method: PSD_TYPE = PSD_TYPE.WELCH,
-        relative=False):
+        relative=False,
+        relative_sub_band=None):
     """Power spectral density:
 
     Many thanks to: https://raphaelvallat.github.io/bandpower.html
@@ -51,6 +52,9 @@ def power_spectral_density(
         relative: boolean
             Whether or not to express the power in a frequency band as a percentage of the
             total power of the signal.
+        relative_sub_band: Optional[Int, Int]
+            If doing a relative calculation, instead of using the whole frequency range as the denominator
+            use the provided values. Note must be within the valid range for our sampling rate. 
 
     """
     band = np.asarray(band)
@@ -65,6 +69,9 @@ def power_spectral_density(
     elif method == PSD_TYPE.MULTITAPER:
         psd, freqs = psd_array_multitaper(
             data, sampling_rate, adaptive=True, normalization='full', verbose=False)
+    
+    else:
+        raise Exception('Invalid PSD type provided')
 
     # Find index of band in frequency vector
     idx_band = np.logical_and(freqs >= low, freqs <= high)
@@ -74,6 +81,14 @@ def power_spectral_density(
 
     # Integral approximation of the spectrum using parabola (Simpson's rule)
     bp = simps(psd[idx_band], dx=freq_res)
+
+    # Whether or not to return PSD as a percentage of total power
+    if relative:
+        if relative_sub_band:
+            relative_idx_band = np.logical_and(freqs >= relative_sub_band[0], freqs <= relative_sub_band[1])
+            bp /= simps(psd[relative_idx_band], dx=freq_res)
+        else:
+            bp /= simps(psd, dx=freq_res)
 
     # Plot the power spectrum
     if plot:
@@ -87,10 +102,6 @@ def power_spectral_density(
         plt.xlim([0, sampling_rate / 2])
         sns.despine()
         plt.show()
-
-    # Whether or not to return PSD as a percentage of total power
-    if relative:
-        bp /= simps(psd, dx=freq_res)
 
     return bp
 
