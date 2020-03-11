@@ -102,6 +102,11 @@ class RSVPInterSequenceFeedbackCalibration(Task):
         # filter parameters
         self.filter_low = self.parameters['filter_low']
         self.filter_high = self.parameters['filter_high']
+
+        # RELATIVE SUBBAND
+        self.relative_low = self.filter_low
+        self.relative_high = self.filter_high
+
         self.filter_order = self.parameters['filter_order']
         self.notch_filter_frequency = self.parameters['notch_filter_frequency']
 
@@ -245,7 +250,9 @@ class RSVPInterSequenceFeedbackCalibration(Task):
             # plot=True,  # uncomment to see the PSD plot in real time
             method=self.psd_method,
             # set relative=False to use absolute
-            relative=True)
+            relative=True,
+            # set relative_sub_band=None for full band
+            relative_sub_band=[self.relative_low, self.relative_high])
 
         self.logger.info(f'[Feedback] Response decision {response}')
 
