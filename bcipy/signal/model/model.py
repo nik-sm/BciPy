@@ -15,31 +15,31 @@ class SignalModel(ABC):
         Train the model using the provided data and labels.
         Return self for convenience.
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def evaluate(self, test_data: np.array, test_labels: np.array) -> ModelEvaluationReport:
         """Compute model performance characteristics on the provided test data and labels."""
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def predict(self, bio_data: np.array, presented_symbols: List[str], all_symbols: List[str]) -> np.array:
         """Using the provided data, compute log likelihoods over the entire symbol set."""
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def save(self, checkpoint_path: Path) -> None:
         """Save model state to the provided checkpoint"""
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def load(self, checkpoint_path: Path) -> None:
         """Restore model state from the provided checkpoint"""
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def __eq__(self, other) -> bool:
-        pass
+        raise NotImplementedError
 
 
 @dataclass

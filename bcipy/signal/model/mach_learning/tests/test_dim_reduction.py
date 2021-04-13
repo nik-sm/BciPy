@@ -1,6 +1,4 @@
-from bcipy.signal.model.mach_learning.dimensionality_reduction.function_dim_reduction import (
-    ChannelWisePrincipalComponentAnalysis,
-)
+from bcipy.signal.model.mach_learning.dimensionality_reduction import ChannelWisePrincipalComponentAnalysis
 import numpy as np
 from numpy.testing import assert_allclose
 

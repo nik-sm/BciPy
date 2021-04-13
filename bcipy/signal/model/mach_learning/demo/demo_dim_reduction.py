@@ -1,5 +1,4 @@
-from bcipy.signal.model.mach_learning.dimensionality_reduction.function_dim_reduction \
-    import ChannelWisePrincipalComponentAnalysis
+from bcipy.signal.model.mach_learning.dimensionality_reduction import ChannelWisePrincipalComponentAnalysis
 import numpy as np
 
 
@@ -17,11 +16,11 @@ def _demo_cw_pca():
 
     cw_pca = ChannelWisePrincipalComponentAnalysis(num_ch=num_ch)
     y = cw_pca.fit_transform(x, var_tol=var_tol)
-    print('CW-PCA Results')
-    print('CW-PCA flows!')
+    print("CW-PCA Results")
+    print("CW-PCA flows!")
     y_2 = cw_pca.transform(x)
-    print('X: {} |--[CW-PCA]--> Y: {}'.format(x.shape, y.shape))
-    print('MSE:{} fit_transform'.format(np.sum(np.abs(y_2 - y))))
+    print("X: {} |--[CW-PCA]--> Y: {}".format(x.shape, y.shape))
+    print("MSE:{} fit_transform".format(np.sum(np.abs(y_2 - y))))
 
     return 0
 

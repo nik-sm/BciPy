@@ -1,9 +1,7 @@
 import matplotlib.pylab as plt
-from bcipy.signal.model.mach_learning.generative_mods.function_density_estimation import KernelDensityEstimate
-from bcipy.signal.model.mach_learning.classifier.function_classifier import RegularizedDiscriminantAnalysis
-from bcipy.signal.model.mach_learning.dimensionality_reduction.function_dim_reduction import (
-    ChannelWisePrincipalComponentAnalysis,
-)
+from bcipy.signal.model.mach_learning.density_estimation import KernelDensityEstimate
+from bcipy.signal.model.mach_learning.classifier import RegularizedDiscriminantAnalysis
+from bcipy.signal.model.mach_learning.dimensionality_reduction import ChannelWisePrincipalComponentAnalysis
 from bcipy.signal.model.mach_learning.pipeline import Pipeline
 import numpy as np
 from scipy.stats import iqr

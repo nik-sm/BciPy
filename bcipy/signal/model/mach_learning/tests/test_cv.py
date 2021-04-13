@@ -1,9 +1,7 @@
 import numpy as np
 from bcipy.signal.model.mach_learning.cross_validation import cross_validation
-from bcipy.signal.model.mach_learning.classifier.function_classifier import RegularizedDiscriminantAnalysis
-from bcipy.signal.model.mach_learning.dimensionality_reduction.function_dim_reduction import (
-    ChannelWisePrincipalComponentAnalysis,
-)
+from bcipy.signal.model.mach_learning.classifier import RegularizedDiscriminantAnalysis
+from bcipy.signal.model.mach_learning.dimensionality_reduction import ChannelWisePrincipalComponentAnalysis
 from bcipy.signal.model.mach_learning.pipeline import Pipeline
 
 from numpy.testing import assert_almost_equal

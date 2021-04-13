@@ -1,6 +1,6 @@
 import matplotlib.pylab as plt
 import numpy as np
-from bcipy.signal.model.mach_learning.generative_mods.function_density_estimation import KernelDensityEstimate
+from bcipy.signal.model.mach_learning.density_estimation import KernelDensityEstimate
 import matplotlib as mpl
 from scipy.stats import iqr
 from bcipy.helpers.load import read_data_csv, load_experimental_data
