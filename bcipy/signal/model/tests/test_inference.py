@@ -5,18 +5,16 @@ import numpy as np
 from bcipy.signal.model.inference import inference
 from bcipy.signal.model.mach_learning.train_model import train_pca_rda_kde_model
 
-import matplotlib as mpl
-from pathlib import Path
 from string import ascii_uppercase
-
-mpl.use("Agg")
-script_path = Path(__file__).absolute().parent
+import pytest
 
 
+@pytest.mark.mpl_image_compare()
 def test_inference():
+    np.random.seed(0)
 
     dim_x = 5
-    num_ch = 1
+    num_ch = 8
     num_x_p = 100
     num_x_n = 900
 
@@ -36,10 +34,9 @@ def test_inference():
     x = x[:, permutation, :]
     y = y[permutation]
 
-    k_folds = 10
-    model, _ = train_pca_rda_kde_model(x, y, k_folds=k_folds)
+    model, _ = train_pca_rda_kde_model(x, y, k_folds=10)
 
-    alp = ascii_uppercase + ["<", "_"]
+    alp = list(ascii_uppercase) + ["<", "_"]
 
     num_x_p = 1
     num_x_n = 9
@@ -51,10 +48,10 @@ def test_inference():
     idx_let = np.random.permutation(len(alp))
     letters = [alp[i] for i in idx_let[0 : (num_x_p + num_x_n)]]
 
-    print(letters)
-    print("target letter: {}".format(letters[-1]))
-    lik_r = inference(x_s, letters, model, alp)
+    lik_r = inference(x=x_s, targets=letters, model=model, alphabet=alp)
 
-    plt.plot(np.array(list(range(len(alp)))), lik_r, "ro")
-    plt.xticks(np.array(list(range(len(alp)))), alp)
-    plt.savefig(script_path / "test.png", bbox_inches="tight", dpi=300)
+    fig, ax = plt.subplots()
+    ax.plot(np.array(list(range(len(alp)))), lik_r, "ro")
+    ax.set_xticks(np.arange(len(alp)))
+    ax.set_xticklabels(alp)
+    return fig
