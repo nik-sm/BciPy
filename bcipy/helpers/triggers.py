@@ -1,6 +1,7 @@
 from bcipy.helpers.load import load_txt_data
 from bcipy.helpers.stimuli import resize_image, play_sound
 from bcipy.helpers.parameters import Parameters
+from bcipy.helpers.timing import lsl_trg_data, read_sample_rate
 import csv
 from typing import Dict, TextIO, List, Tuple
 
@@ -9,6 +10,7 @@ from psychopy import visual, core
 NONE_VALUES = ['0', '0.0']
 SOUND_TYPE = 'sound'
 IMAGE_TYPE = 'image'
+TEXT_TYPE = 'text'
 
 
 class TriggerCallback:
@@ -26,7 +28,7 @@ class TriggerCallback:
 
 
 def _calibration_trigger(experiment_clock: core.Clock,
-                         trigger_type: str = 'sound',
+                         trigger_type: str = 'text',
                          trigger_name: str = 'calibration_trigger',
                          display=None,
                          on_trigger=None) -> List[tuple]:
@@ -83,6 +85,22 @@ def _calibration_trigger(experiment_clock: core.Clock,
             presentation_time = int(1 * display.getActualFrameRate())
             for _ in range(presentation_time):
                 calibration_box.draw()
+                display.flip()
+
+    elif trigger_type == TEXT_TYPE:
+        if display:
+            calibration_text = visual.TextStim(
+                win=display,
+                text='',
+                pos=(0, 0))
+            display.callOnFlip(trigger_callback.callback, experiment_clock,
+                               trigger_name)
+            if on_trigger is not None:
+                display.callOnFlip(on_trigger, trigger_name)
+
+            presentation_time = int(1 * display.getActualFrameRate())
+            for _ in range(presentation_time):
+                calibration_text.draw()
                 display.flip()
 
         else:
@@ -279,6 +297,50 @@ def write_triggers_from_inquiry_icon_to_icon(inquiry_timing: List[Tuple],
         trigger_file.write('%s %s %s' % (icon, targetness, presentation_time) +
                            "\n")
 
+def write_lsl_triggers(data_dir, calibration=False, calibration_trigger=True) -> str:
+    """Write LSL Triggers.
+    
+    Currently, this method only supports the RSVP Tasks. It will read the LSL TRG column and
+        export it to .txt file with the following rows: [label, targetness, timestamp]. Returns
+        the path to the exported file.
+    """
+    fs = read_sample_rate(data_dir)
+    lsl_data = lsl_trg_data(data_dir, fs)
+    path = f'{data_dir}/lsl_triggers.txt'
+    
+    with open(path, 'w') as lsl_file:
+        idx = 0
+        stop_idx = len(lsl_data) - 1
+        target = None
+        for data in lsl_data:
+            timestamp, stimuli = data
+            
+            # don't write calibration trigger
+            if calibration_trigger and stimuli == 'calibration_trigger':
+                idx += 1
+                continue
+            if calibration:
+                # get the next stimulus to determine the targetness
+                if idx != stop_idx:
+                    _, next_stimuli = lsl_data[idx + 1]
+                else:
+                    next_stimuli = ''
+                idx += 1
+                if next_stimuli == '+':
+                    target = stimuli
+                    lsl_file.writelines(f'{stimuli} first_pres_target {timestamp}\n')
+                    continue
+                if stimuli == '+':
+                    lsl_file.writelines(f'{stimuli} fixation {timestamp}\n')
+                    continue
+                if stimuli == target:
+                    lsl_file.writelines(f'{stimuli} target {timestamp}\n')
+                    continue
+                lsl_file.writelines(f'{stimuli} nontarget {timestamp}\n')
+            else:
+                lsl_file.writelines(f'{stimuli} nontarget {timestamp}\n')
+                idx += 1
+    return path
 
 def trigger_decoder(mode: str, trigger_path: str = None, remove_pre_fixation=True) -> tuple:
     """Trigger Decoder.

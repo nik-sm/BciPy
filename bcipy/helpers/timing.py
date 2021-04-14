@@ -4,6 +4,7 @@ task."""
 import sqlite3
 import pandas as pd
 
+#TODO use logger, add tests
 
 def extract_column(data_dir, column):
     """Extract the timestamp and column from the raw_data buffer where
@@ -26,7 +27,7 @@ def extract_column(data_dir, column):
 
 
 def normalized_data(data_dir: str, column: str, sample_rate_hz: float):
-    """Extract the timestamp and column from the raw_data buffer and and
+    """Extract the timestamp and column from the raw_data buffer and
     convert sample number to seconds elapsed since acquisition start.
 
     Parameters:
@@ -97,7 +98,7 @@ def skipped_iter(data, skip_criteria):
             whether or not to skip.
     Returns:
     --------
-        a data item iter starting at the first unskipped item.
+        a data item iter starting at the first un-skipped item.
     """
     iterator = iter(data)
 
@@ -166,7 +167,7 @@ def filled_sensor_data(sensor_data, stimuli, min_time=None, includes_calibration
 
 def triggers(data_dir: str, include_trg_type: bool = False):
     """Read in the triggers.txt file. Convert the timestamps to be in
-    aqcuisition clock units using the offset listed in the file (last entry).
+    acquisition clock units using the offset listed in the file (last entry).
 
     Parameters:
     -----------
@@ -294,5 +295,4 @@ if __name__ == "__main__":
         root = Tk()
         path = filedialog.askdirectory(
             parent=root, initialdir="/", title='Please select a directory')
-
     main(path, args.out)
