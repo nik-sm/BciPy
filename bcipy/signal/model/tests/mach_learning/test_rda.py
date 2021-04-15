@@ -1,5 +1,5 @@
 import numpy as np
-from bcipy.signal.model.mach_learning.classifier import RegularizedDiscriminantAnalysis
+from bcipy.signal.model.ml.classifier import RegularizedDiscriminantAnalysis
 from numpy.testing import assert_allclose
 
 
