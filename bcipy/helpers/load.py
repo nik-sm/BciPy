@@ -204,6 +204,26 @@ def load_csv_data(filename: str = None) -> str:
     return filename
 
 
+def read_channel_data(raw_data, device_info, channel_name, n_records=None):
+    """Get data for a single channel.
+    Parameters:
+    -----------
+        raw_data - complete list of samples
+        device_info - metadata
+        channel_name - channel for which to get data
+        n_records - if present, limits the number of records returned.
+    """
+    if channel_name not in device_info.channels:
+        print(f"{channel_name} column not found; no data will be returned")
+        return []
+    channel_index = device_info.channels.index(channel_name)
+    arr = np.array(raw_data)
+    if n_records:
+        return arr[:n_records, channel_index]
+    return arr[:, channel_index]
+
+
+# TODO deprecate in favor of other method
 def read_data_csv(folder: str, dat_first_row: int = 2,
                   info_end_row: int = 1) -> tuple:
     """ Reads the data (.csv) provided by the data acquisition
@@ -237,6 +257,48 @@ def read_data_csv(folder: str, dat_first_row: int = 2,
     fs = np.array(dat_file_2)[0][1]
 
     return raw_dat, stamp_time, channels, type_amp, fs
+
+
+def read_csv_data(path):
+    """Reads raw_data; returns raw_data and device_info."""
+    with open(path) as csvfile:
+        # read metadata
+        r1 = next(csvfile)
+        name = r1.strip().split(",")[1]
+        r2 = next(csvfile)
+        freq = float(r2.strip().split(",")[1])
+
+        reader = csv.reader(csvfile)
+        channels = next(reader)
+
+        # read the rest of the lines into a list
+        data = []
+        for line in reader:
+            data.append(line)
+
+    device_info = DeviceInfo(fs=freq, channels=channels, name=name)
+    return (data, device_info)
+
+
+def read_triggers(triggers_file):
+    """Read in the triggers.txt file. Convert the timestamps to be in
+    acquisition clock units using the offset listed in the file (last entry).
+    Returns:
+    --------
+        list of (symbol, targetness, stamp) tuples."""
+
+    with open(triggers_file) as trgfile:
+        records = [line.split(' ') for line in trgfile.readlines()]
+        (_cname, _ctype, cstamp) = records[0]
+        (_acq_name, _acq_type, acq_stamp) = records[-1]
+        offset = float(acq_stamp) - float(cstamp)
+
+        corrected = []
+        for i, (name, trg_type, stamp) in enumerate(records):
+            if i < len(records) - 1:
+                # omit offset record for plotting
+                corrected.append((name, trg_type, float(stamp) + offset))
+        return corrected
 
 
 def load_txt_data() -> str:

@@ -158,11 +158,8 @@ def analysis_channel_names_by_pos(channels: List[str],
     return {i: ch for i, ch in enumerate(selected_channels)}
 
 
-def start_viewer(display_screen, parameter_location):
-    viewer = 'bcipy/gui/viewer/data_viewer.py'
-    cmd = f'python {viewer} -m {display_screen} -p {parameter_location}'
-    subprocess.Popen(cmd, shell=True)
-
-    # hack: wait for window to open, so it doesn't error out when the main
-    # window is open fullscreen.
-    time.sleep(2)
+def clock_seconds(device_info: DeviceInfo, sample: int) -> float:
+    """Convert the given raw_data sample number to acquisition clock
+    seconds."""
+    assert sample > 0
+    return sample / device_info.fs
