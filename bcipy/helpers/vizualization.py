@@ -23,7 +23,9 @@ def generate_offline_analysis_screen(
     """ Offline Analysis Screen.
 
     Generates the information figure following the offlineAnalysis.
-    The figure has multiple tabs containing the average ERP plots
+    The figure has multiple tabs containing the average ERP plots.
+
+    Returns a list of the figure handles created.
 
     PARAMETERS
     ----------
@@ -43,6 +45,7 @@ def generate_offline_analysis_screen(
     show_figure: boolean: whether or not to show the figures generated
     channel_names: dict of channel names keyed by their position.
     """
+    fig_handles = []
 
     channel_names = channel_names or {}
     classes = np.unique(y)
@@ -111,6 +114,8 @@ def generate_offline_analysis_screen(
             bbox_inches='tight',
             format='pdf')
 
+    fig_handles.append(fig)
+
     if plot_lik_dens:
         fig, ax = plt.subplots()
         x_plot = np.linspace(
@@ -138,8 +143,12 @@ def generate_offline_analysis_screen(
                 bbox_inches='tight',
                 format='pdf')
 
+        fig_handles.append(fig)
+
     if show_figure:
         plt.show()
+
+    return fig_handles
 
 
 def visualize_csv_eeg_triggers(trigger_col=None):
