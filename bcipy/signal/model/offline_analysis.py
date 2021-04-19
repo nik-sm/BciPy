@@ -85,6 +85,8 @@ def offline_analysis(
     # read_data_csv already removes the timespamp column.
     channel_map = analysis_channels(channels, type_amp)
 
+    # TODO - add inquiry_reshaper to return entire inquiries instead of individual trials
+    # Could move this inside the model perhaps? or give this a flag to ask for trials vs sequences
     x, y, _, _ = trial_reshaper(
         t_t_i,
         t_i,

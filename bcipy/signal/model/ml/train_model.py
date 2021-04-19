@@ -25,22 +25,27 @@ def train_pca_rda_kde_model(x, y, k_folds=10):
     """
 
     # Pipeline is the model. It can be populated manually
+    # TODO - goes in SignalModel.__init__()
     rda = RegularizedDiscriminantAnalysis()
     pca = ChannelWisePrincipalComponentAnalysis(var_tol=0.1 ** 5, num_ch=x.shape[0])
     model = Pipeline()
     model.add(pca)
     model.add(rda)
 
-    # Cross validate
-    arg_cv = cross_validation(x, y, model=model, k_folds=k_folds)
-
-    # Get the AUC before the regularization
+    # Get the AUC using default gamma + lambda values
+    arg_cv = [model.pipeline[-1].lam, model.pipeline[-1].gam]
     tmp, sc_cv, y_cv = cost_cross_validation_auc(model, 1, x, y, arg_cv, k_folds=10, split="uniform")
     auc_init = -tmp
-    # Start Cross validation
+
+    # Now find the optimal gamma + lambda values
+    # NOTE - previously, auc_init == auc_cv always. Now, auc_init should be worse
+    # (because it is measured before gamma and lambda are optimized)
+    arg_cv = cross_validation(x, y, model=model, k_folds=k_folds)
     lam = arg_cv[0]
     gam = arg_cv[1]
     log.debug(r"Optimized val [gam:{} \ lam:{}]".format(lam, gam))
+
+    # Get the AUC using those optimized gamma + lambda
     model.pipeline[1].lam = lam
     model.pipeline[1].gam = gam
     tmp, sc_cv, y_cv = cost_cross_validation_auc(model, 1, x, y, arg_cv, k_folds=10, split="uniform")

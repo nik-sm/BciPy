@@ -1,3 +1,4 @@
+"""Integration test of offline_analysis.py (slow)"""
 from bcipy.signal.model import offline_analysis
 import unittest
 from bcipy.helpers.load import load_json_parameters
@@ -11,11 +12,15 @@ import random
 import gzip
 
 pwd = Path(__file__).absolute().parent
-input_folder = pwd / "test_data_input"
-expected_output_folder = pwd / "test_data_expected_output"  # global for the purpose of pytest-mpl decorator
+input_folder = pwd / "integration_test_input"
+expected_output_folder = pwd / "integration_test_expected_output"  # global for the purpose of pytest-mpl decorator
 
 
 class TestOfflineAnalysis(unittest.TestCase):
+    """
+    TODO - are there other output files that should be tested?
+    """
+
     @classmethod
     def setUpClass(cls):
         np.random.seed(0)
@@ -35,8 +40,7 @@ class TestOfflineAnalysis(unittest.TestCase):
         cls.model, fig_handles = offline_analysis(
             str(cls.tmp_dir), cls.parameters, alert_finished=False, return_fig_handles=True
         )
-        cls.mean_erp_fig_handle = fig_handles[0]
-        cls.lik_dens_fig_handle = fig_handles[1]
+        cls.mean_erp_fig_handle, cls.lik_dens_fig_handle = fig_handles
 
     @classmethod
     def tearDownClass(cls):
