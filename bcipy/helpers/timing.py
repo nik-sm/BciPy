@@ -6,6 +6,7 @@ import pandas as pd
 
 #TODO use logger, add tests
 
+
 def extract_column(data_dir, column):
     """Extract the timestamp and column from the raw_data buffer where
     there are non-zero values.

@@ -297,9 +297,10 @@ def write_triggers_from_inquiry_icon_to_icon(inquiry_timing: List[Tuple],
         trigger_file.write('%s %s %s' % (icon, targetness, presentation_time) +
                            "\n")
 
+
 def write_lsl_triggers(data_dir, calibration=False, calibration_trigger=True) -> str:
     """Write LSL Triggers.
-    
+
     Currently, this method only supports the RSVP Tasks. It will read the LSL TRG column and
         export it to .txt file with the following rows: [label, targetness, timestamp]. Returns
         the path to the exported file.
@@ -307,14 +308,14 @@ def write_lsl_triggers(data_dir, calibration=False, calibration_trigger=True) ->
     fs = read_sample_rate(data_dir)
     lsl_data = lsl_trg_data(data_dir, fs)
     path = f'{data_dir}/lsl_triggers.txt'
-    
+
     with open(path, 'w') as lsl_file:
         idx = 0
         stop_idx = len(lsl_data) - 1
         target = None
         for data in lsl_data:
             timestamp, stimuli = data
-            
+
             # don't write calibration trigger
             if calibration_trigger and stimuli == 'calibration_trigger':
                 idx += 1
@@ -341,6 +342,7 @@ def write_lsl_triggers(data_dir, calibration=False, calibration_trigger=True) ->
                 lsl_file.writelines(f'{stimuli} nontarget {timestamp}\n')
                 idx += 1
     return path
+
 
 def trigger_decoder(mode: str, trigger_path: str = None, remove_pre_fixation=True) -> tuple:
     """Trigger Decoder.
