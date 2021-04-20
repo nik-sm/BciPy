@@ -287,9 +287,9 @@ def get_user_input(window, message, color, first_run=False):
             if keys[0] == 'space':
                 pause = True
 
-            # escape?
-            if keys[0] == 'escape':
-                return False
+            # # escape?
+            # if keys[0] == 'escape':
+            #     return False
 
     else:
         pause = True
@@ -303,6 +303,7 @@ def get_user_input(window, message, color, first_run=False):
                 return False
             pause = False
 
+    event.clearEvents(eventType='keyboard')
     return True
 
 
@@ -326,10 +327,12 @@ def get_key_press(
     -------
         Key Press Timing(List[stamp_label, timestamp])
     """
+    timing = None
     response = event.getKeys(keyList=key_list, timeStamped=clock)
     if response:
-        return [f'{stamp_label}_{response[0][0]}', response[0][1]]
-    return None
+        timing = [f'{stamp_label}_{response[0][0]}', response[0][1]]
+    event.clearEvents(eventType='keyboard')
+    return timing
 
 
 def trial_reshaper(trial_target_info: list,

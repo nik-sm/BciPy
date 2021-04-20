@@ -120,7 +120,7 @@ class InformationProperties:
 
 
 class TaskDisplayProperties:
-    """"Task Dispay Properties.
+    """"Task Display Properties.
 
     An encapsulation of properties relevant to task stimuli presentation in an RSVP paradigm.
     """
@@ -385,7 +385,7 @@ class RSVPDisplay(Display):
 
         Given an inquiry defined to be presented via do_inquiry(), present the full inquiry
             to the user and allow input on whether the intended letter is present or not before
-            going through the rapid serial visual presention.
+            going through the rapid serial visual presentation.
 
         Returns:
             - A tuple containing the timing information and a boolean describing whether to present
@@ -612,14 +612,14 @@ class RSVPDisplay(Display):
                 ori=0.0)
         elif mode == 'textbox':
             return visual.TextBox2(
-                win=self.window,
-                text=stimulus,
+                self.window,
+                stimulus,
+                self.stimuli_font,
                 color=color,
                 colorSpace='rgb',
                 borderWidth=2,
                 borderColor='white',
                 units=units,
-                font=self.stimuli_font,
                 letterHeight=height,
                 size=[.5, .5],
                 pos=stimuli_position,
