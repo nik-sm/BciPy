@@ -1,0 +1,59 @@
+name: BciPy CI/CD
+
+on:
+  push:
+    # branches: [ main ]
+  pull_request:
+    # branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system libraries
+      run:
+        apt-get -y update
+        apt-get -y install python3.8-dev python3.8-tk
+
+    - name: Install python packages
+      run: |
+        make dev-install
+
+    - name: Format 
+      run: |
+        make format
+        
+    - name: Lint
+      run: |
+        make lint
+
+    - name: Run unit tests
+      run: |
+        make unit-test
+        
+    - name: Run integration tests
+      run: |
+        make integration-test
+        
+    - name: Upload coverage
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
+        verbose: true
+        
+    - name: Deploy
+      run: |
+        echo DEPLOY!
+
