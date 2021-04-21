@@ -16,10 +16,10 @@ jobs:
         include:  # sets a variable for locating pip cache
           - os: ubuntu-20.04
             pip_cache_path: ~/.cache/pip
-          - os: macos-latest
-            pip_cache_path: ~/Library/Caches/pip
-          - os: windows-latest
-            pip_cache_path: ~\AppData\Local\pip\Cache
+            # - os: macos-latest
+            #   pip_cache_path: ~/Library/Caches/pip
+            # - os: windows-latest
+            #   pip_cache_path: ~\AppData\Local\pip\Cache
 
     steps:
     - name: Checkout code
