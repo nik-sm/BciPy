@@ -24,8 +24,8 @@ jobs:
 
     - name: Install system libraries
       run: |
-        apt-get -y update
-        apt-get -y install python3.8-dev python3.8-tk
+        sudo apt-get -y update
+        sudo apt-get -y install python3.8-dev python3.8-tk
 
     - name: Install python packages
       run: |
