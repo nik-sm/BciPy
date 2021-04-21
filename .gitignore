@@ -11,6 +11,9 @@ venv/
 __pycache__/
 .cache/
 
+*.swp
+*.swo
+
 # BciPy files and directories 
 calibration.csv
 rawdata.csv
