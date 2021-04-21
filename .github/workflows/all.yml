@@ -8,24 +8,55 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-20.04]
         python-version: [3.8]
+        include:  # sets a variable for locating pip cache
+          - os: ubuntu-20.04
+            pip_cache_path: ~/.cache/pip
+          - os: macos-latest
+            pip_cache_path: ~/Library/Caches/pip
+          - os: windows-latest
+            pip_cache_path: ~\AppData\Local\pip\Cache
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+      # See https://docs.github.com/en/actions/guides/caching-dependencies-to-speed-up-workflows#matching-a-cache-key
+    - name: Restore pip cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ matrix.pip_cache_path }}
+
+        # top priority is the exact match based on hashed requirements
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt', '**/dev_requirements.txt') }}
+
+        # next priority are partial matches
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install python
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
 
+    # https://stackoverflow.com/a/57948488/
     - name: Install system libraries
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install python3.8-dev python3.8-tk libgtk-3-dev
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          sudo apt-get -y update
+          sudo apt-get -y install python3.8-dev python3.8-tk libgtk-3-dev
+        elif [[ "$RUNNER_OS" == "Windows" ]]; then
+          echo Hello, Windows!
+          exit 1
+        elif [[ "$RUNNER_OS" == "macOS" ]]; then
+          echo Hello, mac!
+          exit 1
+        fi
+      shell: bash
 
     - name: Install python packages
       run: |
@@ -33,26 +64,26 @@ jobs:
 
     - name: Format 
       run: |
-        make format
+        echo make format
         
     - name: Lint
       run: |
-        make lint
+        echo make lint
 
     - name: Run unit tests
       run: |
         make unit-test
-        
+
     - name: Run integration tests
       run: |
         make integration-test
-        
+
     - name: Upload coverage
       uses: codecov/codecov-action@v1
       with:
         fail_ci_if_error: true
         verbose: true
-        
+
     - name: Deploy
       run: |
         echo DEPLOY!
